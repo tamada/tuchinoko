@@ -256,7 +256,7 @@ public abstract class AbstractProcessor implements Processor{
      * @throws IllegalStateException 適切な状態でないときにこのメソッドが呼び出された場合．
      */
     @Override
-    public synchronized final void init() throws ProcessorException{
+    public final synchronized void init() throws ProcessorException{
         if(stage != Stage.UNINITIALIZED){
             throw new IllegalStateException("expects UNINITIALIZED, but " + stage);
         }
@@ -295,8 +295,6 @@ public abstract class AbstractProcessor implements Processor{
         stage = Stage.PROCESSING;
         try{
             perform(source, dest);
-        } catch(ProcessorException e){
-            throw e;
         } finally{
             stage = Stage.PROCESSED;
         }

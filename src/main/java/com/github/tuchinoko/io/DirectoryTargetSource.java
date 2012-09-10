@@ -25,12 +25,12 @@ public class DirectoryTargetSource implements TargetSource{
      * 指定されたディレクトリ以下の全てのファイルをProcessTargetとするオブジェクトを構築します．
      * </p><p>
      * fileがディレクトリでなかった場合はIOExceptionが投げられます．
-     * 引数がnullの場合はNullPointerExceptionが投げられます．
+     * 引数がnullの場合はIllegalArgumentExceptionが投げられます．
      * </p>
      */
     public DirectoryTargetSource(File file) throws IOException{
         if(file == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         if(!file.isDirectory()){
             throw new IOException(file.getName() + ": not directory");
@@ -54,31 +54,7 @@ public class DirectoryTargetSource implements TargetSource{
         final List<File> list = new ArrayList<File>();
         listFiles(list, file);
 
-        return new Iterator<ProcessTarget>(){
-            private Iterator<File> iterator = list.iterator();
-
-            @Override
-            public boolean hasNext(){
-                return iterator.hasNext();
-            }
-
-            @Override
-            public ProcessTarget next(){
-                File target = iterator.next();
-                String name = target.getPath();
-                name = name.substring(file.getPath().length());
-                if(name.startsWith(File.separator)){
-                    name = name.substring(1);
-                }
-                name = name.replace(File.separatorChar, '/');
-
-                return new FileProcessTarget(DirectoryTargetSource.this, name, target);
-            }
-
-            @Override
-            public void remove(){
-            }
-        };
+        return new FileListIterator(this, file, list.iterator());
     }
 
     /**
@@ -100,12 +76,46 @@ public class DirectoryTargetSource implements TargetSource{
     private void listFiles(List<File> list, File base){
         if(base.isDirectory()){
             File[] files = base.listFiles();
-            for(File file: files){
-                listFiles(list, file);
+            for(File targetFile: files){
+                listFiles(list, targetFile);
             }
         }
         else{
             list.add(base);
+        }
+    }
+
+    private static class FileListIterator implements Iterator<ProcessTarget>{
+        private Iterator<File> iterator;
+        private File file;
+        private DirectoryTargetSource source;
+
+        public FileListIterator(DirectoryTargetSource source, File file, Iterator<File> iterator){
+            this.source = source;
+            this.file = file;
+            this.iterator = iterator;
+        }
+
+        @Override
+        public boolean hasNext(){
+            return iterator.hasNext();
+        }
+
+        @Override
+        public ProcessTarget next(){
+            File target = iterator.next();
+            String name = target.getPath();
+            name = name.substring(file.getPath().length());
+            if(name.startsWith(File.separator)){
+                name = name.substring(1);
+            }
+            name = name.replace(File.separatorChar, '/');
+
+            return new FileProcessTarget(source, name, target);
+        }
+
+        @Override
+        public void remove(){
         }
     }
 }

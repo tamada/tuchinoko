@@ -18,24 +18,24 @@ public interface TargetSource extends Iterable<ProcessTarget>{
      * このオブジェクトを互いに区別する名前を返します．
      * ただし，この名前は他のTargetSourceと重複する可能性があります．
      */
-    public String getName();
+    String getName();
 
     /**
      * このオブジェクトが持つProcessTargetの列挙を返します．
      */
     @Override
-    public Iterator<ProcessTarget> iterator();
+    Iterator<ProcessTarget> iterator();
 
     /**
      * このオブジェクトを閉じます．
      * このメソッド呼び出し以降，このオブジェクトの他のメソッドの動作は保証されません．
      */
-    public void close() throws IOException;
+    void close() throws IOException;
 
     /**
      * このTargetSourceオブジェクトに指定されたファイルが含まれていればtrueを返します．
      * @param target 含まれているか判断するファイル．
      * @return このTargetSourceオブジェクトにtargetが含まれていればtrue，含まれていなければfalse．
      */
-    public boolean contains(String target);
+    boolean contains(String target);
 }

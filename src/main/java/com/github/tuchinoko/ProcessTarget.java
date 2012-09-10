@@ -18,7 +18,7 @@ public interface ProcessTarget{
      *
      * @return このProcessTargetの名前
      */
-    public String getName();
+    String getName();
 
     /**
      * <p>
@@ -31,7 +31,7 @@ public interface ProcessTarget{
      * 
      * @return このProcessTargetが表すクラスの名前
      */
-    public String getClassName();
+    String getClassName();
 
     /**
      * このProcessTargetのデータを読み込むための入力ストリームを返します．
@@ -39,7 +39,7 @@ public interface ProcessTarget{
      * @return 入力ストリーム
      * @throws IOException 入出力エラーが起こった場合
      */
-    public InputStream getSource() throws IOException;
+    InputStream getSource() throws IOException;
 
     /**
      * このProcessTargetの種類を返します．
@@ -47,10 +47,10 @@ public interface ProcessTarget{
      * @return このオブジェクトの種類
      * @see TargetType
      */
-    public TargetType getType();
+    TargetType getType();
 
     /**
      * このProcessTargetが所属するProcessTargetを返します．
      */
-    public TargetSource getTargetSource();
+    TargetSource getTargetSource();
 }

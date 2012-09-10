@@ -30,7 +30,7 @@ public class Provider implements Serializable{
     
     /**
      * このプロバイダの名前を指定してオブジェクトを作成します．
-     * もしプロバイダの名前がnullの場合はNullPointerExceptionが投げられます．
+     * もしプロバイダの名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * このコンストラクタを使った場合，著者と所属団体は設定されません．
      */
     public Provider(String name){
@@ -39,7 +39,7 @@ public class Provider implements Serializable{
 
     /**
      * このプロバイダの名前と著者情報を指定してオブジェクトを作成します．
-     * もしプロバイダの名前がnullの場合はNullPointerExceptionが投げられます．
+     * もしプロバイダの名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * このコンストラクタを使った場合，所属団体は設定されません．
      */
     public Provider(String name, Author[] authors){
@@ -48,7 +48,7 @@ public class Provider implements Serializable{
 
     /**
      * このプロバイダの名前と所属団体を指定してオブジェクトを作成します．
-     * もしプロバイダの名前がnullの場合はNullPointerExceptionが投げられます．
+     * もしプロバイダの名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * このコンストラクタを使った場合，著者情報は設定されません．
      */
     public Provider(String name, Organization org){
@@ -57,12 +57,12 @@ public class Provider implements Serializable{
 
     /**
      * このプロバイダの名前，著者，団体を指定してオブジェクトを作成します．
-     * もしプロバイダの名前がnullの場合はNullPointerExceptionが投げられます．
+     * もしプロバイダの名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * 著者や所属団体がnullの場合は，それらが設定されないオブジェクトが作成されます．
      */
     public Provider(String name, Author[] initAuthors, Organization org){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         this.name = name;
         this.org = org;

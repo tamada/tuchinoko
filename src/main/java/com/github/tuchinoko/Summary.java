@@ -35,13 +35,13 @@ public class Summary implements Iterable<Summary.Entry>{
      * <p>
      * 処理器のIdを設定します．
      * </p><p>
-     * idがnullのNullPointerExceptionが投げられます．
+     * idがnullのIllegalArgumentExceptionが投げられます．
      * </p>
      * @param id 処理器のId
      */
-    public void setProcessorId(String id){
+    public final void setProcessorId(String id){
         if(id == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         this.processorId = id;
     }
@@ -56,13 +56,13 @@ public class Summary implements Iterable<Summary.Entry>{
 
     /**
      * <p>サマリに，1つのエントリを追加します．</p>
-     * <p>keyがnullの場合，valueがnullの場合はNullPointerExceptionが投げられます．</p>
+     * <p>keyがnullの場合，valueがnullの場合はIllegalArgumentExceptionが投げられます．</p>
      * @param key 追加するエントリのキー
      * @param value キーに対応する値
      */
     public void putEntry(String key, String value){
         if(key == null || value == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         entries.put(key, new Summary.Entry(key, value));
     }
@@ -72,14 +72,14 @@ public class Summary implements Iterable<Summary.Entry>{
      * keyに対応する値を返します．keyに対応する値が存在しない場合はnullが返されます．
      * </p>
      * <p>
-     * keyがnullの場合はNullPointerExceptionが投げられます．
+     * keyがnullの場合はIllegalArgumentExceptionが投げられます．
      * </p>
      * @param key 取得したい値に対応付けられているキー．
      * @return keyに対応付けられた値．
      */
     public String getEntry(String key){
         if(key == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         Entry entry = entries.get(key);
         String value = null;
@@ -127,11 +127,11 @@ public class Summary implements Iterable<Summary.Entry>{
         /**
          * 与えられたキーとそれに対応する値で，
          * サマリのエントリを構築します．
-         * キーもしくは，値がnullの場合はNullPointerExceptionが投げられます．
+         * キーもしくは，値がnullの場合はIllegalArgumentExceptionが投げられます．
          */
         public Entry(String key, String value){
             if(key == null || value == null){
-                throw new NullPointerException();
+                throw new IllegalArgumentException();
             }
             this.key = key;
             this.value = value;

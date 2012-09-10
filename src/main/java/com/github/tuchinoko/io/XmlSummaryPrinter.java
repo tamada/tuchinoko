@@ -59,7 +59,7 @@ public class XmlSummaryPrinter extends SummaryPrinter{
     }
 
     private void printTree(PrintWriter out, Tree parent, String indent){
-        if(parent.nodes.size() > 0){
+        if(parent.getSize() > 0){
             String childIndent = indent + "  ";
             out.printf("%s<%s>%n", indent, parent.tag);
             for(Tree tree: parent.nodes.values()){
@@ -80,25 +80,56 @@ public class XmlSummaryPrinter extends SummaryPrinter{
             String[] tags = name.split("\\.");
             Tree parent = root;
             for(int i = 0; i < tags.length; i++){
-                Tree tree = parent.nodes.get(tags[i]);
+                Tree tree = parent.getNode(tags[i]);
                 if(tree == null){
                     tree = new Tree(tags[i]);
-                    parent.nodes.put(tags[i], tree);
+                    parent.putNode(tags[i], tree);
                 }
                 parent = tree;
             }
-            parent.value = entry.getValue();
+            parent.setValue(entry.getValue());
         }
-        return root.nodes.values().toArray(new Tree[root.nodes.size()]);
+        return root.getNodes();
     }
 
     private static class Tree{
-        Map<String, Tree> nodes = new LinkedHashMap<String, Tree>();
-        String tag;
-        String value;
+        private Map<String, Tree> nodes = new LinkedHashMap<String, Tree>();
+        private String tag;
+        private String value;
 
         public Tree(String tag){
             this.tag = tag;
+        }
+
+        public int getSize(){
+            return nodes.size();
+        }
+
+        public Tree[] getNodes(){
+            return nodes.values().toArray(new Tree[nodes.size()]);
+        }
+
+        public String getTag(){
+            return tag;
+        }
+
+        public String getValue(){
+            return value;
+        }
+
+        public void setValue(String value){
+            if(value == null){
+                throw new NullPointerException();
+            }
+            this.value = value;
+        }
+
+        public Tree getNode(String key){
+            return nodes.get(key);
+        }
+
+        public void putNode(String key, Tree tree){
+            nodes.put(key, tree);
         }
     }
 }

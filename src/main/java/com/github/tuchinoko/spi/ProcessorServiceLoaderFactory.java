@@ -10,7 +10,7 @@ import java.util.Map;
  * @author Haruaki Tamada
  * @see DefaultProcessorServiceLoader
  */
-public class ProcessorServiceLoaderFactory{
+public final class ProcessorServiceLoaderFactory{
     private static ProcessorServiceLoaderFactory factory = new ProcessorServiceLoaderFactory();
     private Map<String, ProcessorServiceLoader> loaders;
 

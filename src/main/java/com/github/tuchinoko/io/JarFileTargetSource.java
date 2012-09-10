@@ -2,11 +2,14 @@ package com.github.tuchinoko.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.tuchinoko.ProcessTarget;
 import com.github.tuchinoko.TargetSource;
@@ -54,6 +57,7 @@ public class JarFileTargetSource implements TargetSource{
             try{
                 manifest = file.getManifest();
             } catch(IOException e){
+                Logger.getLogger(getClass().getName()).log(Level.WARNING, e.getMessage(), e);
             }
         }
         return manifest;
@@ -84,49 +88,63 @@ public class JarFileTargetSource implements TargetSource{
         return entry != null;
     }
 
+    private InputStream getInputStream(JarEntry entry) throws IOException{
+        return file.getInputStream(entry);
+    }
+
     /**
      * このオブジェクトに含まれるProcessTargetの列挙を返します．
      */
     @Override
     public Iterator<ProcessTarget> iterator(){
-        return new Iterator<ProcessTarget>(){
-            Enumeration<JarEntry> entries = file.entries();
-            JarEntry next = findNext();
+        return new JarEntryIterator(this, file.entries());
+    }
 
-            @Override
-            public boolean hasNext(){
-                return next != null;
+    private static class JarEntryIterator implements Iterator<ProcessTarget>{
+        private Enumeration<JarEntry> entries;
+        private JarFileTargetSource source;
+        private JarEntry next;
+
+        public JarEntryIterator(JarFileTargetSource source, Enumeration<JarEntry> entries){
+            this.source = source;
+            this.entries = entries;
+            next = findNext();
+        }
+
+        @Override
+        public boolean hasNext(){
+            return next != null;
+        }
+
+        @Override
+        public ProcessTarget next(){
+            ProcessTarget target = null;
+            try{
+                String name = next.getName();
+                target = new PlainProcessTarget(source, name, source.getInputStream(next));
+                next = findNext();
+            } catch(IOException e){
+                Logger logger = Logger.getLogger(getClass().getName());
+                logger.log(Level.WARNING, e.getMessage(), e);
             }
+            return target;
+        }
 
-            @Override
-            public ProcessTarget next(){
-                ProcessTarget target = null;
-                try{
-                    String name = next.getName();
-                    target = new PlainProcessTarget(JarFileTargetSource.this, name, file.getInputStream(next));
-                    next = findNext();
-                } catch(IOException e){
-                    e.printStackTrace();
+        @Override
+        public void remove(){
+        }
+
+        private JarEntry findNext(){
+            JarEntry entry = null;
+            do{
+                if(entries.hasMoreElements()){
+                    entry = entries.nextElement();
                 }
-                return target;
-            }
-
-            @Override
-            public void remove(){
-            }
-
-            private JarEntry findNext(){
-                JarEntry entry = null;
-                do{
-                    if(entries.hasMoreElements()){
-                        entry = entries.nextElement();
-                    }
-                    else{
-                        break;
-                    }
-                } while(entry.isDirectory());
-                return entry;
-            }
-        };
+                else{
+                    break;
+                }
+            } while(entry.isDirectory());
+            return entry;
+        }
     }
 }

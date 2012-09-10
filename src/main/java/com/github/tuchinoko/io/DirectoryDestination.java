@@ -36,7 +36,7 @@ public class DirectoryDestination extends AbstractDestination{
      * ディレクトリが存在しない場合は，自動的に作成されます．
      * </p><p>
      * ディレクトリ作成に失敗した場合はIOExceptionが投げられます．
-     * 引数にnullが与えられた場合はNullPointerExceptionが投げられます．
+     * 引数にnullが与えられた場合はIllegalArgumentExceptionが投げられます．
      * </p>
      *
      * @param name 出力先のファイル名．
@@ -45,7 +45,7 @@ public class DirectoryDestination extends AbstractDestination{
     @Override
     public OutputStream getOutput(String name) throws IOException{
 	if(name == null){
-	    throw new NullPointerException();
+	    throw new IllegalArgumentException();
 	}
         File file = new File(base, name);
         File parent = file.getParentFile();
@@ -68,7 +68,7 @@ public class DirectoryDestination extends AbstractDestination{
      * ディレクトリが存在しない場合は，自動的に作成されます．
      * </p><p>
      * ディレクトリ作成に失敗した場合はIOExceptionが投げられます．
-     * 引数にnullが与えられた場合はNullPointerExceptionが投げられます．
+     * 引数にnullが与えられた場合はIllegalArgumentExceptionが投げられます．
      * </p>
      * 
      * @param target 出力するProcessTarget．
@@ -77,7 +77,7 @@ public class DirectoryDestination extends AbstractDestination{
     @Override
     public OutputStream getOutput(ProcessTarget target) throws IOException{
 	if(target == null){
-	    throw new NullPointerException();
+	    throw new IllegalArgumentException();
 	}
         return getOutput(target.getName());
     }

@@ -129,15 +129,16 @@ public class MultipleTargetSource implements TargetSource{
         }
 
         private ProcessTarget buildProcessTarget(TargetSource source, ProcessTarget target){
-            if(target.getTargetSource() != source){
-                if(target instanceof DelegateProcessTarget){
-                    ((DelegateProcessTarget)target).setTargetSource(source);
+            ProcessTarget pt = target;
+            if(pt.getTargetSource() != source){
+                if(pt instanceof DelegateProcessTarget){
+                    ((DelegateProcessTarget)pt).setTargetSource(source);
                 }
                 else{
-                    target = new DelegateProcessTarget(source, target);
+                    pt = new DelegateProcessTarget(source, pt);
                 }
             }
-            return target;
+            return pt;
         }
     }
 }

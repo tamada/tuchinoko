@@ -2,6 +2,8 @@ package com.github.tuchinoko;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import jp.sourceforge.talisman.xmlcli.CommandLinePlus;
 import jp.sourceforge.talisman.xmlcli.OptionsBuilder;
@@ -25,17 +27,20 @@ import com.github.tuchinoko.utils.Provider;
  * @author Haruaki Tamada
  */
 public class Main{
-    public Main(String[] args){
+    private static final String HELP_OPTION = "help";
+    private static final String PROCESSORS_OPTION = "processors";
+
+    private Main(String[] args){
         try{
             Options options = buildOptions();
             CommandLineParser parser = new PosixParser();
             CommandLinePlus commandLine = new CommandLinePlus(parser.parse(options, args, false));
             Environment env = new Environment();
-            System.out.println("help option: " + commandLine.hasOption("help"));
-            System.out.println("processors: " + commandLine.getOptionValue("processors"));
+            System.out.println("help option: " + commandLine.hasOption(HELP_OPTION));
+            System.out.println("processors: " + commandLine.getOptionValue(PROCESSORS_OPTION));
             System.out.println("args length: " + commandLine.getArgs().length);
             if(commandLine.hasOption("help")
-                    || commandLine.getOptionValue("processors") == null
+                    || commandLine.getOptionValue(PROCESSORS_OPTION) == null
                     || commandLine.getArgs().length == 0){
                 showHelp(env, commandLine, options);
                 return;
@@ -47,7 +52,7 @@ public class Main{
             tuchinoko.execute();
 
         } catch(Exception e){
-            e.printStackTrace();
+            Logger.getLogger(getClass().getName()).log(Level.WARNING, e.getMessage(), e);
         }
     }
 
@@ -55,7 +60,7 @@ public class Main{
         for(String arg: cl.getArgs()){
             context.addTarget(arg);
         }
-        String processorNames = cl.getOptionValue("processors");
+        String processorNames = cl.getOptionValue(PROCESSORS_OPTION);
         for(String processorName: processorNames.split(",")){
             context.addProcessorName(processorName);
         }
@@ -64,7 +69,7 @@ public class Main{
     }
 
     private void showHelp(Environment env, CommandLinePlus commandLine, Options options){
-        String processorName = commandLine.getOptionValue("processors");
+        String processorName = commandLine.getOptionValue(PROCESSORS_OPTION);
         if(processorName == null){
             showSimpleHelp(commandLine, env, options);
         }
@@ -166,11 +171,11 @@ public class Main{
 
             return options;
         }catch(XmlCliConfigurationException ex){
-            ex.printStackTrace();
+            Logger.getLogger(getClass().getName()).log(Level.WARNING, ex.getMessage(), ex);
         }catch(DOMException ex){
-            ex.printStackTrace();
+            Logger.getLogger(getClass().getName()).log(Level.WARNING, ex.getMessage(), ex);
         }catch(IOException ex){
-            ex.printStackTrace();
+            Logger.getLogger(getClass().getName()).log(Level.WARNING, ex.getMessage(), ex);
         }
         return null;
     }

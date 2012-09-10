@@ -24,18 +24,18 @@ public interface Processor{
     /**
      * 1セッションの間，他と重複しない名前を返します．
      */
-    public String getId();
+    String getId();
 
     /**
      * 1セッションの間，他と重複しない名前を設定します．
      * @see #getId
      */
-    public void setId(String id);
+    void setId(String id);
 
     /**
      * 処理内容を表す単純な名前を返す．
      */
-    public String getProcessorName();
+    String getProcessorName();
 
     /**
      * <p>
@@ -45,7 +45,7 @@ public interface Processor{
      * で返される {@link Arguments <code>Arguments</code>}により行われます．
      * </p>
      */
-    public void init() throws ProcessorException;
+    void init() throws ProcessorException;
 
     /**
      * 実際に処理を行います．
@@ -54,27 +54,27 @@ public interface Processor{
      * @param dest
      * @throws ProcessorException
      */
-    public void execute(TargetSource source, Destination dest) throws ProcessorException;
+    void execute(TargetSource source, Destination dest) throws ProcessorException;
 
     /**
      * 終了処理を行います．
      * @throws ProcessorException
      */
-    public void finish() throws ProcessorException;
+    void finish() throws ProcessorException;
 
     /**
      * サービスプロバイダを返します．
      * このメソッドは常にnullではない値を返します．
      */
-    public ProcessorService getProvider();
+    ProcessorService getProvider();
 
     /**
      * この処理器の現在設定されているパラメータを返します．
      */
-    public Arguments getArguments();
+    Arguments getArguments();
 
     /**
      * この処理器の処理内容を表すオブジェクトを返します．
      */
-    public Summary getSummary();
+    Summary getSummary();
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @see Argument
  * @author Haruaki Tamada
  */
-public class ArgumentImpl implements Serializable, Argument{
+public final class ArgumentImpl implements Serializable, Argument{
     private static final long serialVersionUID = 5126931208339916608L;
 
     private String name;
@@ -26,9 +26,9 @@ public class ArgumentImpl implements Serializable, Argument{
 
     /**
      * 指定された名前で，値と説明がnullの引数オブジェクトを作成します．
-     * 名前がnullの場合はNullPointerExceptionが投げられます．
+     * 名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * @param name 引数の名前
-     * @throws NullPointerException nameがnullの場合．
+     * @throws IllegalArgumentException nameがnullの場合．
      */
     public ArgumentImpl(String name){
         this(name, null, null);
@@ -36,10 +36,10 @@ public class ArgumentImpl implements Serializable, Argument{
 
     /**
      * 指定された名前と値を持ち，説明がnullの引数オブジェクトを作成します．
-     * 名前がnullの場合はNullPointerExceptionが投げられます．
+     * 名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * @param name 引数の名前
      * @param value  引数の値
-     * @throws NullPointerException nameがnullの場合．
+     * @throws IllegalArgumentException nameがnullの場合．
      */
     public ArgumentImpl(String name, String value){
         this(name, value, null);
@@ -47,15 +47,15 @@ public class ArgumentImpl implements Serializable, Argument{
 
     /**
      * 指定された名前と値，説明を持つ引数オブジェクトを作成します．
-     * 名前がnullの場合はNullPointerExceptionが投げられます．
+     * 名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * @param name 引数の名前
      * @param value  引数の値
      * @param description 引数の説明
-     * @throws NullPointerException nameがnullの場合．
+     * @throws IllegalArgumentException nameがnullの場合．
      */
     public ArgumentImpl(String name, String value, String description){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         this.name = name;
         setValue(value);

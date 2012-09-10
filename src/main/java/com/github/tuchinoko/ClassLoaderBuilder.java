@@ -12,10 +12,10 @@ public interface ClassLoaderBuilder{
      * {@link ClassLoader <code>ClassLoader</code>}を構築して返します．
      * I/Oエラーが起こった場合，IOException が投げられます．
      */
-    public ClassLoader createLoader() throws IOException;
+    ClassLoader createLoader() throws IOException;
 
     /**
      * このクラスの名前を返します．
      */
-    public String getName();
+    String getName();
 }

@@ -14,6 +14,7 @@ import com.github.tuchinoko.ProcessTarget;
  * @author Haruaki Tamada
  */
 public abstract class AbstractDestination implements Destination{
+    private static final int BUFFER_SIZE = 512;
 
     @Override
     public abstract OutputStream getOutput(String className) throws IOException;
@@ -28,7 +29,7 @@ public abstract class AbstractDestination implements Destination{
         try{
             in = target.getSource();
             out = getOutput(target);
-            byte[] data = new byte[256];
+            byte[] data = new byte[BUFFER_SIZE];
             int read = 0;
 
             while((read = in.read(data)) != 0){

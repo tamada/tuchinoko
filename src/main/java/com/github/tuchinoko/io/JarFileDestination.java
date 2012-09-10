@@ -52,7 +52,7 @@ public class JarFileDestination extends AbstractDestination{
      * 既に出力ストリームが閉じられていた場合
      * ({@link #close <code>close</code>}メソッドが呼び出されていた場合)
      * はIOExceptionが投げられます．
-     * 引数にnullが与えられた場合はNullPointerExceptionが投げられます．
+     * 引数にnullが与えられた場合はIllegalArgumentExceptionが投げられます．
      * </p>
      *
      * @param name 出力するファイル名(jarファイルのエントリ)．
@@ -64,7 +64,7 @@ public class JarFileDestination extends AbstractDestination{
 	    throw new IOException("already closed");
 	}
 	if(name == null){
-	    throw new NullPointerException();
+	    throw new IllegalArgumentException();
 	}
         if(jarOut == null){
             if(manifest != null){
@@ -96,7 +96,7 @@ public class JarFileDestination extends AbstractDestination{
      * 既に出力ストリームが閉じられていた場合
      * ({@link #close <code>close</code>}メソッドが呼び出されていた場合)
      * はIOExceptionが投げられます．
-     * 引数にnullが与えられた場合はNullPointerExceptionが投げられます．
+     * 引数にnullが与えられた場合はIllegalArgumentExceptionが投げられます．
      * </p>
      *
      * @param target 出力するファイル名(jarファイルのエントリ)．

@@ -5,13 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * {@link net.sf.tuchinoko.ProcessTarget <code>ProcessTarget</code>}
+ * {@link com.github.tuchinoko.ProcessTarget <code>ProcessTarget</code>}
  * の型を表すためのクラスです．
  *
  * @author Haruaki Tamada
  */
 public abstract class TargetType{
-    private static final List<TargetType> targets = new ArrayList<TargetType>();
+    private static final List<TargetType> TARGETS = new ArrayList<TargetType>();
 
     /**
      * 名前の接尾辞で型を判断する{@link TargetType}です．
@@ -59,7 +59,7 @@ public abstract class TargetType{
     /**
      * 名前で型を判断する{@link TargetType}です．
      */
-    private static abstract class StringTargetType extends TargetType{
+    private abstract static class StringTargetType extends TargetType{
         private String[] strings;
         private String name;
 
@@ -136,7 +136,7 @@ public abstract class TargetType{
      * </p>
      */
     public static Iterator<TargetType> values(){
-        return targets.iterator();
+        return TARGETS.iterator();
     }
 
     /**
@@ -145,15 +145,15 @@ public abstract class TargetType{
      * その型を返します．
      * 何も合致しない場合，{@link #FILE <code>FILE</code>}であると判断されます．
      * </p><p>
-     * 引数にnullが与えられた場合，NullPointerExceptionが投げられます．
+     * 引数にnullが与えられた場合，IllegalArgumentExceptionが投げられます．
      * </p>
      */
     public static TargetType getType(String name){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         TargetType target = TargetType.FILE;
-        for(TargetType type: targets){
+        for(TargetType type: TARGETS){
             if(type.isType(name)){
                 target = type;
                 break;
@@ -167,7 +167,7 @@ public abstract class TargetType{
      * このコンストラクタが呼び出されれば，自動的にその型は登録されます．
      */
     protected TargetType(){
-        targets.add(this);
+        TARGETS.add(this);
     };
 
     /**

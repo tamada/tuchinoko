@@ -2,6 +2,8 @@ package com.github.tuchinoko;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.tuchinoko.spi.ProcessorService;
 import com.github.tuchinoko.spi.ProcessorServiceLoader;
@@ -14,7 +16,7 @@ import com.github.tuchinoko.spi.ProcessorServiceLoaderFactory;
  * 
  * @author Haruaki Tamada
  */
-public class Environment implements Iterable<ProcessorService>{
+public final class Environment implements Iterable<ProcessorService>{
     private ProcessorServicePool pool;
 
     /**
@@ -44,18 +46,18 @@ public class Environment implements Iterable<ProcessorService>{
     /**
      * 指定された名前を持つ処理器のサービスプロバイダを返します．
      * 指定された名前を持つ処理器が存在しない場合はnullを返します．
-     * 引数にnullが与えられた場合はNullPointerExceptionが投げられます．
+     * 引数にnullが与えられた場合はIllegalArgumentExceptionが投げられます．
      */
     public ProcessorService getService(String name){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         return pool.getService(name);
     }
 
     /**
      * クラスローダを更新し，指定されたクラスローダから処理器のサービスプロバイダを取得します．
-     * 指定されたクラスローダがnullの場合はNullPointerExceptionが投げられます．
+     * 指定されたクラスローダがnullの場合はIllegalArgumentExceptionが投げられます．
      */
     public void updateClassLoader(ClassLoader loader){
         ProcessorServiceLoader serviceLoader = ProcessorServiceLoaderFactory.getInstance().getLoader();
@@ -76,7 +78,7 @@ public class Environment implements Iterable<ProcessorService>{
         try{
             loader = builder.createLoader();
         } catch(IOException e){
-            e.printStackTrace();
+            Logger.getLogger(getClass().getName()).log(Level.WARNING, e.getMessage(), e);
         }
         return loader;
     }

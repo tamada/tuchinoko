@@ -43,7 +43,7 @@ class DelegateProcessTarget implements ProcessTarget{
 
     public void setTargetSource(TargetSource source){
         if(source == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         this.source = source;
     }

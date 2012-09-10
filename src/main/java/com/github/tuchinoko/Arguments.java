@@ -86,7 +86,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
      * オブジェクトを持っているとは，このArgumentsオブジェクトに
      * 指定された名前を持つ値が設定されていることです．その値がnullの場合もあり得ます．
      * </p><p>
-     * 引数にnullが与えられれば，NullPointerExceptionが投げられます．
+     * 引数にnullが与えられれば，IllegalArgumentExceptionが投げられます．
      * </p>
      * 
      * @param name 存在を確認する引数の名前
@@ -94,7 +94,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
      */
     public boolean hasArgument(String name){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException("name is null");
         }
         return arguments.get(name) != null;
     }
@@ -109,7 +109,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
      * {@link #hasArgument(String) <code>hasArgument(name)</code>}がfalseを返す場合，
      * このメソッドはnullを返します．
      * </p><p>
-     * nameがnullの場合，NullPointerExceptionが投げられます．
+     * nameがnullの場合，IllegalArgumentExceptionが投げられます．
      * </p>
      * 
      * @param name 値を取得するArgumentの名前
@@ -119,7 +119,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
     public String getValue(String name, String defaultValue){
         String value = null;
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         if(arguments.containsKey(name)){
             Argument param = arguments.get(name);
@@ -140,7 +140,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
      * {@link #hasArgument(String) <code>hasArgument(name)</code>}がfalseを返す場合や，
      * 解説が設定されていなかった場合はnullを返します．
      * </p><p>
-     * 引数にnullが与えられた場合，NullPointerExceptionが投げられます．
+     * 引数にnullが与えられた場合，IllegalArgumentExceptionが投げられます．
      * </p>
      * 
      * @param name 解説を取得するArgumentの名前
@@ -149,7 +149,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
     public String getDescription(String name){
         String desc = null;
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         if(arguments.containsKey(name)){
             Argument param = arguments.get(name);
@@ -178,7 +178,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
 
     /**
      * Argumentの解説を設定します．与えられた名前のArgumentが設定されていない場合，
-     * name がnullの場合は NullPointerExceptionが投げられます．
+     * nameがnullの場合は IllegalArgumentExceptionが投げられます．
      * 
      * @param name 解説を設定しようとするArgumentの名前
      * @param description 新たに設定する解説
@@ -186,10 +186,10 @@ public class Arguments implements Iterable<Argument>, Serializable{
     public void setDescription(String name, String description){
         Argument arg = arguments.get(name);
         if(name == null){
-            throw new NullPointerException("name is null");
+            throw new IllegalArgumentException("name is null");
         }
         else if(arg == null){
-            throw new NullPointerException(name + " is not contained.");
+            throw new IllegalArgumentException(name + " is not contained.");
         }
         else{
             arg = new ArgumentImpl(name, arg.getValue(), description);
@@ -210,7 +210,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
      * <p>
      * Argumentに値を割り当てます． nameが存在しない場合は新たなArgumentが作成されます．
      * </p><p>
-     * nameがnullの場合，NullPointerExceptionが投げられます．
+     * nameがnullの場合，IllegalArgumentExceptionが投げられます．
      * valueがnullの場合，Argumentの値がnullとして設定されます．
      * </p><p>
      * nameに割り当てられたArgumentが存在した場合，値が変更されるだけで，解説には影響を与えません．
@@ -218,7 +218,7 @@ public class Arguments implements Iterable<Argument>, Serializable{
      */
     public void putValue(String name, String value){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         Argument arg = arguments.get(name);
         if(arg == null){
@@ -234,13 +234,13 @@ public class Arguments implements Iterable<Argument>, Serializable{
      * <p>
      * Argumentに値を割り当てます．
      * </p><p>
-     * nameがnullの場合，NullPointerExceptionが投げられます．
+     * nameがnullの場合，IllegalArgumentExceptionが投げられます．
      * value，descriptionがnullの場合，nullで上書きされます．
      * </p>
      */
     public void putValue(String name, String value, String description){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         arguments.put(name, new ArgumentImpl(name, value, description));
     }

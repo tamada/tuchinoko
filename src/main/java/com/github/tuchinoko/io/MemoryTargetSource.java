@@ -36,16 +36,17 @@ public class MemoryTargetSource implements TargetSource{
     /**
      * このオブジェクトに指定されたProcessTargetを追加します．
      */
-    public void addTarget(ProcessTarget target){
-        if(target.getTargetSource() != this){
-            if(target instanceof DelegateProcessTarget){
-                ((DelegateProcessTarget)target).setTargetSource(this);
+    public final void addTarget(ProcessTarget target){
+        ProcessTarget pt = target;
+        if(pt.getTargetSource() != this){
+            if(pt instanceof DelegateProcessTarget){
+                ((DelegateProcessTarget)pt).setTargetSource(this);
             }
             else{
-                target = new DelegateProcessTarget(this, target);
+                pt = new DelegateProcessTarget(this, pt);
             }
         }
-        list.add(target);
+        list.add(pt);
     }
 
     /**

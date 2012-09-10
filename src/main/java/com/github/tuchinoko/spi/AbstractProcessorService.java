@@ -48,9 +48,9 @@ public abstract class AbstractProcessorService implements ProcessorService{
 
     @Override
     public final Author[] getAuthors(){
-        Provider provider = getProvider();
-        if(provider != null){
-            return provider.getAuthors();
+        Provider currentProvider = getProvider();
+        if(currentProvider != null){
+            return currentProvider.getAuthors();
         }
         return new Author[0];
     }
@@ -89,9 +89,9 @@ public abstract class AbstractProcessorService implements ProcessorService{
      */
     @Override
     public final Organization getOrganization(){
-        Provider provider = getProvider();
-        if(provider != null){
-            return provider.getOrganization();
+        Provider currentProvider = getProvider();
+        if(currentProvider != null){
+            return currentProvider.getOrganization();
         }
         return null;
     }

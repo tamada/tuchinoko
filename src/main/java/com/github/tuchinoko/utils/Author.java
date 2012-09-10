@@ -17,13 +17,13 @@ public class Author implements Serializable{
      * <p>
      * 名前とメールアドレスを指定し，オブジェクトを構築します．
      * </p><p>
-     * 名前がnullの場合はNullPointerExceptionが投げられます．
+     * 名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * 電子メールがnullの場合はgetEmailがnullを返すようになります．
      * </p>
      */
     public Author(String name, String email){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         this.name = name;
         this.email = email;
@@ -33,7 +33,7 @@ public class Author implements Serializable{
      * <p>
      * 名前を指定し，オブジェクトを構築します．
      * </p><p>
-     * 名前がnullの場合はNullPointerExceptionが投げられます．
+     * 名前がnullの場合はIllegalArgumentExceptionが投げられます．
      * </p><p>
      */
     public Author(String name){

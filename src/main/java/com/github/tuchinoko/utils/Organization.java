@@ -18,7 +18,7 @@ public class Organization implements Serializable{
      * <p>
      * 著者の所属団体名を指定してオブジェクトを作成します．
      * </p><p>
-     * 所属団体名がnullの場合はNullPointerExceptionが投げられます．
+     * 所属団体名がnullの場合はIllegalArgumentExceptionが投げられます．
      * </p>
      */
     public Organization(String name){
@@ -29,13 +29,13 @@ public class Organization implements Serializable{
      * <p>
      * 著者の所属団体名とURLを指定してオブジェクトを作成します．
      * </p><p>
-     * 所属団体名がnullの場合はNullPointerExceptionが投げられます．
+     * 所属団体名がnullの場合はIllegalArgumentExceptionが投げられます．
      * URLがnullの場合は，{@link #getUrl}がnullを返すようになります．
      * </p>
      */
     public Organization(String name, URL url){
         if(name == null){
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         this.name = name;
         this.url = url;

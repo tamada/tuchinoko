@@ -57,7 +57,7 @@ $ git clone git@github.com:tamada/tuchinoko.git
 ~~        :
 ~~  <dependencies>
 ~~    <dependency>
-~~      <groupId>net.sf.tuchinoko</groupId>
+~~      <groupId>com.github.tuchinoko</groupId>
 ~~      <artifactId>core</artifactId>
 ~~      <version>${currentVersion}</version>
 ~~      <scope>compile</scope>

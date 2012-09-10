@@ -18,13 +18,13 @@ public interface ProcessorService{
      * 返された{@link Arguments <code>Arguments</code>}オブジェクトを変更しても他に影響を与えません．
      * @return 初期設定値
      */
-    public Arguments getDefaultArguments();
+    Arguments getDefaultArguments();
 
     /**
      * このSPIが返す{@link Processor <code>Processor</code>}の解説を返します．
      * @return このSPIが対応するProcessorの解説
      */
-    public String getDescription();
+    String getDescription();
 
     /**
      * {@link Processor <code>Processor</code>}を返します．
@@ -32,32 +32,32 @@ public interface ProcessorService{
      * そのため，並行して呼び出されても影響を受けないよう，実装しておかなければなりません．
      * @return 作成されたProcessorオブジェクト
      */
-    public Processor getProcessor() throws ProcessorBuildException;
+    Processor getProcessor() throws ProcessorBuildException;
 
     /**
      * このSPIが対応する{@link Processor <code>Processor</code>}の名前を返します．
      * @return 対応するProcessorの名前
      */
-    public String getProcessorName();
+    String getProcessorName();
 
     /**
      * このSPI並びに{@link Processor <code>Processor</code>}
      * の作成者のリストを返します．
      * @return 作成者のリスト
      */
-    public Author[] getAuthors();
+    Author[] getAuthors();
 
     /**
      * このSPI並びに{@link Processor <code>Processor</code>}
      * の作成者の団体を返します．
      * @return 作成者の所属する団体
      */
-    public Organization getOrganization();
+    Organization getOrganization();
 
     /**
      * このSPI並びに{@link Processor <code>Processor</code>}
      * の作成者のリストとその団体のオブジェクトを返します．
      * @return 作成者とその団体を収めたオブジェクト
      */
-    public Provider getProvider();
+    Provider getProvider();
 }

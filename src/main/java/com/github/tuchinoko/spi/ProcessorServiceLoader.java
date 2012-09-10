@@ -11,23 +11,23 @@ public interface ProcessorServiceLoader{
     /**
      * このProcessorServiceLoaderの名前を返します．
      */
-    public String getName();
+    String getName();
 
     /**
      * デフォルトのクラスローダを使いProcessorServiceをロードし，
      * 新たなProcessorServicePoolに格納して返します．
      */
-    public ProcessorServicePool loadServices();
+    ProcessorServicePool loadServices();
 
     /**
      * デフォルトのクラスローダを使いProcessorServiceをロードし，
      * 指定されたProcessorServicePoolに格納します．
      */
-    public ProcessorServicePool loadServices(ProcessorServicePool pool);
+    ProcessorServicePool loadServices(ProcessorServicePool pool);
 
     /**
      * 指定されたクラスローダを使いProcessorServiceをロードし，
      * 指定されたProcessorServicePoolに格納します．
      */
-    public ProcessorServicePool loadServices(ProcessorServicePool pool, ClassLoader loader);
+    ProcessorServicePool loadServices(ProcessorServicePool pool, ClassLoader loader);
 }
