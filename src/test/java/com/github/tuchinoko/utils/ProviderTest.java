@@ -84,7 +84,7 @@ public class ProviderTest{
         Assert.assertNull(org.getUrl());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullCheck() throws Exception{
         new Provider(null);
     }

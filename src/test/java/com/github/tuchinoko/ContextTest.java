@@ -77,7 +77,7 @@ public class ContextTest{
 
     @Test(expected=NullPointerException.class)
     public void testNullArgumentKey(){
-        context.putArgument(null, "this method will throw NullPointerException");
+        context.putArgument(null, "this method will throw IllegalArgumentException");
     }
 
     @Test

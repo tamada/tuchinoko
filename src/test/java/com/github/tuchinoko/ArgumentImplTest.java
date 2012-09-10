@@ -53,7 +53,7 @@ public class ArgumentImplTest{
         Assert.assertEquals("newDesc", arg2.getDescription());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullNameInConstructor() throws Exception{
         arg = new ArgumentImpl((String)null);
     }

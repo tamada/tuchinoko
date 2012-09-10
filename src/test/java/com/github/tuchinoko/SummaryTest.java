@@ -34,23 +34,23 @@ public class SummaryTest{
         Assert.assertEquals("new-id-001", summary.getProcessorId());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullCheck1() throws Exception{
         summary.setProcessorId(null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullCheck2() throws Exception{
         summary.getEntry(null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullCheck3() throws Exception{
         summary.putEntry(null, "this method will throw NullPointerException");
     }
 
-    @Test(expected=NullPointerException.class)
-    public void testNullCheck() throws Exception{
+    @Test(expected=IllegalArgumentException.class)
+    public void testNullCheck4() throws Exception{
         new Summary.Entry("key1", null);
     }
 }

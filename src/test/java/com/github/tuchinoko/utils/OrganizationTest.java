@@ -33,7 +33,7 @@ public class OrganizationTest{
         Assert.assertEquals("New Org", org3.toString());
     }
     
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullCheck() throws Exception{
         new Organization(null);
     }

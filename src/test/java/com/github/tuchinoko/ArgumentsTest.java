@@ -145,37 +145,37 @@ public class ArgumentsTest{
         Assert.assertEquals("newDescription4", args.getDescription("arg4"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullNameInHasArguments() throws Exception{
         args.hasArgument(null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullNameInGetValue() throws Exception{
         args.getValue(null);
     }
     
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullNameInGetDescription() throws Exception{
         args.getDescription(null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullArgumentInSetDescription() throws Exception{
         args.setDescription("emptyKey", "description");
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullNameInSetDescription() throws Exception{
         args.setDescription(null, "description");
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullNameInPutValue() throws Exception{
         args.putValue(null, "valuenull");
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullNameInPutValue2() throws Exception{
         args.putValue(null, "valuenull", "description");
     }

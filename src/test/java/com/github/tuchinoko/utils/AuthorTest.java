@@ -31,7 +31,7 @@ public class AuthorTest{
         Assert.assertEquals("Taro Tuchinoko", author3.toString());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullCheck() throws Exception{
         new Author(null);
     }

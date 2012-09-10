@@ -48,7 +48,7 @@ public class EnvironmentTest{
         Assert.assertEquals("nop", service3.getProcessorName());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testNullCheck1() throws Exception{
         env.getService(null);
     }

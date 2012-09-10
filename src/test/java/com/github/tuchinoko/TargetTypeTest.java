@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TargetTypeTest{
-    @Test(expected=NullPointerException.class)
+    @Test(expected=IllegalArgumentException.class)
     public void testGetTypeNullCheck(){
         TargetType.getType(null);
     }
