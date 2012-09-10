@@ -1,0 +1,310 @@
+ ----
+ Define New Processor
+ ----
+ Haruaki Tamada
+ ----
+ 2010-12-28
+ ----
+
+{Define New Processor} — 処理器の定義
+
+ *{{{Define_New_Processor}処理器の定義}}
+
+  *{{{Overview}概要}}
+
+   *{{{Download_plugin_library}プラグイン用のライブラリのダウンロード}}
+
+  *{{{Create_Subclass_of_AbstractProcessor}AbstractProcessorクラスのサブクラスの作成}}
+
+   *{{{prepare_method}prepareメソッド}}
+
+   *{{{perform_method}performメソッド}}
+
+   *{{{summarize_method}summarizeメソッド}}
+
+  *{{{Print_Processing_Result}処理結果の出力}}
+
+  *{{{Define_Meta_Information_of_Processor}処理器のメタ情報の定義}}
+
+  *{{{Create_Service_Descriptor}サービスデスクリプタの作成}}
+
+  *{{{Create_Jar_File}Jarファイルの作成}}
+
+ *{{{Example}実装例}}
+
+  *{{{NopProcessor}NopProcessorの作成}}
+
+  *{{{NopProcessorService}NopProcessorServiceの作成}}
+
+  *{{{Create_Service_Descriptor_for_NopProcessorService}サービスデスクリプタの作成}}
+
+  *{{{Create_Jar_File_for_NopProcessor}Jarファイルの作成}}
+
+  *{{{Deploy}デプロイ}}
+
+*{OverView} — 概要
+
+ 以下の2つのクラスのサブクラスを作成しなければいけません．
+
+ * <<<AbstractProcessor>>>: クラスファイルの変換処理を行う処理器の実装のため．
+
+ * <<<AbstractProcessorService>>>: 処理器のメタ情報を管理するクラス．SPI (Service Provider Interface)．
+
+ []
+
+ <<<AbstractProcessor>>>では，実際の変換処理を行い，
+指定された場所へ変換後のクラスファイルを出力します．
+なお，変換の前に前処理用のメソッドが呼び出され，
+変換が全て終わったあと，後処理用のメソッドが呼び出されます．
+
+ <<<AbstractProcessorService>>>では，処理器のメタ情報を定義します．
+処理器の作成者，作成者の所属団体，また，処理器がどのようなパラメータを受け取るのか，
+そのパラメータの初期値を適切に返すように実装します．
+
+ <<<AbstractProcessor>>>クラスと<<<AbstractProcessorService>>>クラスは1対1の対応関係を持ちます．
+一方，<<<AbstractProcessor>>>オブジェクトは<<<AbstractProcessorService>>>オブジェクトに対して複数存在できます．
+<<<AbstractProcessor>>>オブジェクトがいくつ存在しようと，対応する<<<AbstractProcessorService>>>は1つです．
+もちろん，別の処理(処理B)を行う処理器の場合は，別の<<<AbstractProcessorService>>>オブジェクトが存在します．
+
+**{Create Subclass of AbstractProcessor} — <<<AbstractProcessor>>>クラスのサブクラスの作成
+
+ 以下の3つのメソッドを実装しなければいけません．
+また，処理結果を<<<Summary>>>オブジェクトにまとめて返します．
+
+*------------------+------------+-----------------------------------------------------------------------------+
+| メソッド名       | 返り値の型 | 説明 |
+*------------------+------------+-----------------------------------------------------------------------------+
+| <<<prepare>>>    | void       | Processorの初期化処理のため，呼び出されます．
+*------------------+------------+-----------------------------------------------------------------------------+
+| <<<perform>>>    | void       | Processorの処理を行います．
+*------------------+------------+-----------------------------------------------------------------------------+
+| <<<summarize>>>  | void       | Processorの後処理のため，呼び出されます．
+*------------------+------------+-----------------------------------------------------------------------------+
+Override required method list of <<<AbstractProcessor>>> class
+
+ 以下，それぞれのメソッドが行うこと，処理結果の出力方法について説明します．
+
+***{prepare_method} — <<<prepare>>>メソッド
+
+ 初期化処理を行います．このメソッドには<<<Arguments>>>が渡されます．
+渡された<<<Arguments>>>に沿って処理を行うよう初期化しなければいけません．
+
+***{perform method} — <<<perform>>>メソッド
+
+ 実際に変換を行うメソッドです．このメソッドは2つの引数を受け取ります．
+<<<TargetSource>>>と<<<Destination>>>です．
+
+ <<<TargetSource>>>は入力の集合を表します．zipやjar，
+ディレクトリ内のクラスファイルの集合を抽象化するクラスです．
+処理器が入力元を意識しなくても良いようになっています．
+<<<TargetSource>>>は複数の<<<ProcessTarget>>>を持ちます．
+<<<ProcessTarget>>>の列挙は<<<TargetSource>>>の<<<iterator>>>メソッドで得られます．
+
+ <<<ProcessTarget>>>は1つのファイルを表します．
+ファイルの種類は<<<ProcessTarget>>>の<<<getType>>>メソッドで判定できます．
+また，ファイルの内容は<<<getSource>>>メソッドが返す<<<InputStream>>>から読み取れます．
+
+ <<<Destination>>>は出力先を抽象化します．zipファイル，jarファイル，
+ディレクトリを区別せず出力できます．
+<<<output>>>メソッドにクラス名もしくはファイル名を渡せば，それに対応した
+<<<OutputStream>>>が返されます．
+返された<<<OutputStream>>>にクラスファイルを出力すれば，適切に処理されます．
+
+***{summarize method} — <<<summarize>>>メソッド
+
+ 処理中に確保したメモリの解放などの終了処理を行います．
+
+***{Print Processing Result} — 処理結果の出力
+
+ 処理結果は<<<Summary>>>オブジェクトにまとめられ出力されます．
+<<<Summary>>>オブジェクトは自動的に作成されるため，エントリを追加することで処理結果をまとめます．
+エントリはキーと値のペアで表されます．キーも値も文字列型で表されます．
+キーは階層構造としても表せ，階層は「.(ドット)」で区切ります．
+
+*{Define Meta Information of Processor}処理器のメタ情報の定義
+
+ <<<AbstractProcessorService>>>クラスを継承したクラスを作成します．
+継承したクラスでは以下のメソッドを実装し，適切なオブジェクトを返さなくてはいけません．
+
+*--------------------------------+-----------------+----------------------------------------------------------------+
+| メソッド名                     | 返り値の型      | 説明
+*--------------------------------+-----------------+----------------------------------------------------------------+
+| <<<getProcessorName>>>         | <<<String>>>    | この処理器の名前を文字列で返します．
+*--------------------------------+-----------------+----------------------------------------------------------------+
+| <<<getDescription>>>           | <<<String>>>    | この処理器の説明を文字列で返します．
+*--------------------------------+-----------------+----------------------------------------------------------------+
+| <<<createProcessor>>>          | <<<Processor>>> | 対応する処理器オブジェクトを生成して返します．
+*--------------------------------+-----------------+----------------------------------------------------------------+
+| <<<createProvider>>>           | <<<Provider>>>  | この処理器の著者情報を返します．
+*--------------------------------+-----------------+----------------------------------------------------------------+
+| <<<createDefaultArguments>>>   | <<<Arguments>>> | この処理器のパラメータの初期値を返します．
+*--------------------------------+-----------------+----------------------------------------------------------------+
+Override required method list of <<<AbstractProcessorService>>> class
+
+*{Create Service Descriptor} — サービスデスクリプタの作成
+
+ 適当な場所に<<<com.github.tuchinoko.spi.ProcessorService>>>という名前のファイルを作成します．
+内容は上で作成した<<<AbstractProcessorService>>>を継承したクラスの完全修飾名
+(パッケージ名を含むクラス名．最後に.classは必要ありません)を書きます． 
+1行に1クラスとしてください．
+
+*{Create Jar File} — Jarファイルの作成
+
+ 作成した処理器, SPIとその関連クラスを全て含むjarファイルを作成します．
+上で作成したサービスデスクリプタは<<<META-INF/services/>>>に置いてください．
+その後，作成したjarファイルをクラスパスに含めてTuchinokoを実行すれば自動的に作成したクラスが認識されます．
+
+{Example} — 実装例
+
+ ここでは，サンプルとして，何も処理しない<<<NopProcessor>>>をサンプルとして作成します．
+パッケージは<<<com.github.tuchinoko.plugins.nop>>>とします．
+
+*{NopProcessor} — <<<NopProcessor>>>の作成
+
+ 処理器のクラスを作成します．このクラスは<<<AbstractProcessor>>>を継承し， 
+{{{Create_Subclass_of_AbstractProcessor}<<<AbstractProcessor>>>クラスのサブクラスの作成}}
+で記したメソッドを実装します．
+
+ <<<NopProcessor>>>では何も処理を行わないので，<<<prepare>>>メソッド，<<<summarize>>>メソッドは何も行いません．
+
+----
+package com.github.tuchinoko.plugins.nop;
+
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import com.github.tuchinoko.AbstractProcessor;
+import com.github.tuchinoko.Arguments;
+import com.github.tuchinoko.Destination;
+import com.github.tuchinoko.ProcessorException;
+import com.github.tuchinoko.ProcessTarget;
+import com.github.tuchinoko.TargetSource;
+
+public class NopProcessor extends AbstractProcessor{
+    public NopProcessor(NopProcessorService service){
+        super(service);
+    }
+
+    @Override
+    public void prepare(Arguments args){
+        // do nothing....
+    }
+
+    @Override
+    public void perform(TargetSource source, Destination dest) throws ProcessorException{
+        for(ProcessTarget target: source){
+            try{
+                InputStream in = target.getSource();
+                OutputStream out = dest.output(target.getName());
+                putEntry("target", target.getName());
+
+                int data;
+                while((data = in.read()) != -1){
+                    out.write(data);
+                }
+                in.close();
+                out.close();
+            } catch(IOException e){
+                throw new ProcessorException(e);
+            }
+        }
+    }
+
+    @Override
+    public void summarize(){
+        // do nothing....
+    }
+}
+----
+
+*{NopProcessorService} — <<<NopProcessorService>>>の作成
+
+ <<<AbstractProcessorService>>>クラスを継承して<<<ProcessorService>>>の実装クラスを作成します．
+実装しなければならないメソッドは{{{Define_Meta_Information_of_Processor}上で記した}}5つのメソッドです．
+
+ <<<getProcessorName>>>メソッドはASCII文字列で返してください．
+<<<getDescription>>>は今のところ，Localeは無視できます．
+<<<getProvider>>>メソッドで，作成者情報を隠しておきたい場合は<<<Provider.UNKNOWN>>>を返すことができます．
+
+ <<<createProcessor>>>メソッドは処理器が必要になったときに呼び出されます．
+このメソッドでは毎回新たなオブジェクトを作成してください．
+なぜなら，1セッションの間に同じ処理器が実行される場合があり，
+同じ処理器でも与えるパラメータが異なる場合があります．
+それらは同一のオブジェクトでは区別できないため，新たなオブジェクトを必要とするためです．
+
+ <<<createDefaultArguments>>>は最初の１度だけ呼び出されるメソッドです．
+このサービスクラスが提供する処理器のパラメータとその初期値を表すオブジェクト
+<<<Arguments>>>を作成し，返してください．受け取るパラメータが何もなければ，
+このサンプルのように単純に<<<Arguments>>>オブジェクトを作成し，返してください．
+
+----
+package com.github.tuchinoko.plugins.nop;
+
+import java.net.URL;
+import java.net.MalformedURLException;
+
+import com.github.tuchinoko.Arguments;
+import com.github.tuchinoko.Processor;
+import com.github.tuchinoko.spi.AbstractProcessorService;
+import com.github.tuchinoko.utils.Author;
+import com.github.tuchinoko.utils.Organization;
+import com.github.tuchinoko.utils.Provider;
+
+public class NopProcessorService extends AbstractProcessorService{
+    @Override
+    public String getProcessorName(){
+        return "nop";
+    }
+
+    @Override
+    public String getDescription(){
+        return "何も処理を行わない処理器";
+    }
+
+    @Override
+    public Processor createProcessor(){
+        return new NopProcessor(this);
+    }
+
+    @Override
+    public Provider createProvider(){
+	return Provider.TUCHINOKO_PROVIDER;
+    }
+
+    @Override
+    public Arguments createDefaultArguments(){
+        return new Arguments();
+    }
+}
+----
+
+*{Create Service Descriptor for NopProcessor} — サービスデスクリプタの作成
+
+ <<<com.github.tuchinoko.spi.ProcessorService>>>ファイルに以下の内容を書きます．
+
+----
+com.github.tuchinoko.plugins.nop.NopProcessorService
+----
+
+*{Create Jar File of NopProcessor} — Jarファイルにまとめる．
+
+ 以下の構成でjarファイルを作成します．
+
+----
+root -+- com --- github --- tuchinoko --- plugins --- nop -+- NopProcessor.class
+      |                                                    |
+      |                                                    +- NopProcessorService.class
+      +- META-INF -+- MANIFEST.MF
+                   |
+                   +- services --- com.github.tuchinoko.spi.ProcessorService
+----
+
+*{Deploy} — デプロイ
+
+ 作成したjarファイルをTuchinokoのlibディレクトリに置くと起動時に読み込みます．
+以下のコマンドを入力し，最後にnopが表示されればデプロイできています．
+
+----
+$ tuchinoko.sh --help
+----

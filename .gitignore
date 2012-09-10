@@ -1,6 +1,13 @@
 *.class
-
 # Package Files #
 *.jar
 *.war
 *.ear
+target
+*~
+.DS_Store
+._*
+.classpath
+.project
+.settings
+jcoverage.ser

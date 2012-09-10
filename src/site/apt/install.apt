@@ -1,0 +1,95 @@
+ ----
+ Download &amp; Install
+ ----
+ Haruaki Tamada
+ ----
+ 2011-02-12
+ ----
+
+Tuchinoko-Adminを使ったダウンロードとインストール
+
+ 
+
+Manually Download and Install
+
+*{Download} ― ダウンロード
+
+  * {{{Download_via_git}gitを使ったソースコードの取得}}
+
+~~ * {{{Download_Binary_and_Source}ソースとバイナリのダウンロード}}
+
+~~  * {{{Download_with_Maven}Mavenを使ったバイナリの取得}}
+
+**{Download via git} ― gitを使ったソースコードの取得
+
+ 以下のコマンドを使いソースコードを取得できます．
+
+----
+$ git clone git://github.com/tamada/tuchinoko.git
+----
+
+ 書き変え権限があるならば以下のコマンドでソースコードを取得できます．
+
+----
+$ git clone git@github.com:tamada/tuchinoko.git
+----
+
+~~*{Download Binary and Source} ― ソースとバイナリのダウンロード
+~~
+~~ 以下のURLからソースとバイナリをダウンロードできます．
+~~
+~~ {{https://sourceforge.net/projects/tuchinoko/files/tuchinoko-1.0/}}
+~~
+~~**{Download with Maven} ― Mavenを使ったバイナリの取得
+~~
+~~ Mavenを使うと，jarファイルを取得できます．
+~~pom.xmlの<<<repositories>>>タグに以下に示す<<<repository>>>タグを追加し，
+~~<<<dependencies>>>タグに<<<dependency>>>タグを追加してください．
+~~
+~~----
+~~  <repositories>
+~~    <repository>
+~~      <id>tuchinoko.sourceforge.net</id>
+~~      <name>Tuchinoko Maven2 Repository</name>
+~~      <url>http://tuchinoko.sourceforge.net/maven2</url>
+~~    </repository>
+~~  </repositories>
+~~        :
+~~  <dependencies>
+~~    <dependency>
+~~      <groupId>net.sf.tuchinoko</groupId>
+~~      <artifactId>core</artifactId>
+~~      <version>${currentVersion}</version>
+~~      <scope>compile</scope>
+~~    </dependency>
+~~  </dependencies>
+~~----
+
+{Install} ― インストール
+
+ * {{{Install_the_New_Processor}処理器のインストール}}
+
+ ダウンロードしたアーカイブファイルを展開し，適当な場所に置いてください．
+この場所をtuchinoko.path とします．
+その後，環境変数<<<TUCHINOKO_HOME>>>を定義し，値をtuchinoko.pathにします．
+
+ 必要に応じて環境変数<<<PATH>>>に<<<$TUCHINOKO_HOME/bin>>>を追加してください．
+
+*{Install the New Processor} ― 処理器のインストール
+
+ 通常，処理器はjarファイルの形式で提供されます．
+jarファイル形式で提供された処理器をtuchinokoが指定する場所に置けば起動時に読み込みます．
+自動的に読み込む場所は以下の通りです．
+
+ * 環境変数 TUCHINOKO_LIB に定義された場所．複数の場所を File.separator で区切って指定できます．場所は絶対パスで記さなくてはいけません．
+
+ * $HOME/.tuchinoko/lib．HOMEはTuchinokoを実行したユーザのホームディレクトリを表します．
+
+ * $TUCHINOKO_HOME/lib．tuchinokoのjarファイルが置かれているディレクトリと同じディレクトリを表します．
+
+ []
+
+ なお，処理器が依存する他のjarファイルはMANIFEST.MFにClass-Pathエントリを書き，
+そこに記した場所に置くようにしてください．
+多くの場合，処理器のjarファイルと同じ場所に置くことになるでしょう．
+

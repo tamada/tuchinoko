@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<comand-line name="tuchinoko">
+  <definitions>
+    <definition name="processors">
+      <short-option>p</short-option>
+      <long-option>processors</long-option>
+      <description>プロセッサのリスト</description>
+      <argument>REQUIRED</argument>
+      <argument-name>PROCESSORS</argument-name>
+      <value-separator>,</value-separator>
+      <multiple-args/>
+    </definition>
+    <definition name="destination">
+      <short-option>d</short-option>
+      <long-option>destination</long-option>
+      <description>出力先</description>
+      <argument>REQUIRED</argument>
+      <argument-name>DEST</argument-name>
+    </definition>
+    <definition name="args">
+      <long-option>args</long-option>
+      <description>プロセッサの引数の設定</description>
+      <argument>REQUIRED</argument>
+      <argument-name>PROCESSOR_NAME.ARGS_NAME=VALUE</argument-name>
+    </definition>
+    <definition name="help">
+      <short-option>h</short-option>
+      <long-option>help</long-option>
+      <description>このメッセージを表示します．</description>
+    </definition>
+  </definitions>
+
+  <available-options>
+    <option>processors</option>
+    <option>destination</option>
+    <option>args</option>
+    <option>help</option>
+  </available-options>
+</comand-line>

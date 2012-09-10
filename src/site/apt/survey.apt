@@ -1,0 +1,135 @@
+ ----
+ Survey
+ ----
+ Haruaki Tamada
+ ----
+ 2011-02-21
+ ----
+
+Survey
+
+ * {{{Books}Books ― 書籍}}
+
+ * {{{Articles}Articles ― 記事}}
+
+ * {{{Papers}Papers ― 論文}}
+
+  * {{{Name_Mangling}Name Mangling ― 名前難読化}}
+
+   * {{{API_Name_Obfuscation}API Name Obfuscation ― API名隠蔽難読化}}
+
+  * {{{Data_Obfuscation}Data Obfusaction ― データ難読化}}
+
+  * {{{Control_Flow_Obfuscation}Control Flow Obfusaction ― コントロールフロー難読化}}
+
+  * {{{Uncategorized}Uncategorized ― 未整理}}
+
+ * {{{Web_Pages}Web Pages ― Webページ}}
+
+ * {{{Tools}Tools ― ツール}}
+
+*{Books} ― 書籍
+
+ * Christian Collberg, Jasvir Nagra, Surreptitious Software:
+   Obfuscation, Watermarking, and Tamperproofing for Software
+   Protection, Addison-Wesley Professional, 2009.
+
+ * Godfrey Nolan, 松田 晃一, 小沼 千絵, 湯浅 龍太, デコンパイリング
+   Java ―逆解析技術とコードの難読化 (Art Of Reversing),
+   オライリージャパン (2010).
+
+*{Articles} ― 記事
+
+ * Mairsh John, ``Three Control Flow Obfuscation Methods for Java
+   Software,'' <Java Lobby>,
+   {{http://java.dzone.com/articles/three-control-flow-obfuscation}},
+   2010/11/23
+
+*{Papers} ― 論文
+
+**{Name Mangling} ― 名前難読化
+
+ * Stelvio Cimato, Antonio De Santis, Umberto Ferraro Petrillo,
+   ``Overcoming the obfuscation of Java programs by identifier
+   renaming,'' Journal of Systems and Software, Volume. 78, Issues. 1,
+   pp.60--72, October 2005.
+
+***{API Name Obfuscation} ― API名隠蔽難読化
+
+ * 玉田 春昭, 中村 匡秀, 門田 暁人, 松本 健一, ``APIライブラリ名隠ぺい
+   のための動的名前解決を用いた名前難読化'', 電子情報通信学会論文誌,
+   Vol.J90-D, No.10, pp.2723--2735, October 2007.
+
+ * Haruaki Tamada, Masahide Nakamura, Akito Monden, and Ken-ichi
+   Matsumoto, ``Introducing Dynamic Name Resolution Mechanism for
+   Obfuscating System-Defined Names in Programs,'' In <Proc. IASTED
+   International Conference on Software Engineering (IASTED SE 2008)>,
+   598-074, pp. 125--130, 12-14 February 2008 (Innsbruck, Austria).
+
+**{Data Obfuscation} ― データ難読化
+
+ * Stephen Drape, ``Generalising the array split obfuscation'',
+   Journal of Information Sciences, Volume. 177, issue 1, pp.202--219,
+   January 2007.
+
+**{Control Flow Obfuscation} ― コントロールフロー難読化
+
+ * 門田 暁人, 高田 義広, 鳥居 宏次, ``ループを含むプログラムを難読化す
+   る方法の提案'', 電子情報通信学会論文誌, Vol.J80-D-I, No.7,
+   pp.644--652, July 1997.
+
+ * 真野 芳久, ``拡張opaque述語: その応用と構成法'', 
+   電子情報通信学会論文誌, Vol.J90-D, No. 3, pp.971--974, March 2007.
+
+**{Uncategorized} ― 未整理
+
+ * Matias Madou, Bertrand Anckaert, Patrick Moseley, Saumya Debray,
+   Bjorn De Sutter, Koen De Bosschere, ``Software Protection through
+   Dynamic Code Mutation,'' In Proc. International Workshop on
+   Information Security Applications 2005 (WISA 2005), pp.371--385,
+   August 2005.
+
+ * Christian Collberg, Clark Thomborson, Douglas Low, ``Breaking
+   Abstractions and Unstructuring Data Structures,'' In Proc. 1998
+   International Conference on Computer Languages, pp. 28--38, October
+   1998.
+
+ * Christian Collberg, Clark Thomborson, Douglas Low, ``Manufacturing
+   Cheap, Resilient, and Stealthy Opaque Constructs,'' In
+   Proc. Principles of Programming Languages 1998, POPL'98,
+   pp.184--196, January 1998.
+
+ * Stephan Drape, Anirban Majumdar, Clark Thomborson, ``Slicing Aided
+   Design of Obfuscating Transformes,'' In Proc. 6th IEEE/ACIS
+   International Conference on Computer and Information Science (ICIS
+   2007), 2007.
+
+ * Yusuke Sakabe, Masakazu Soshi, Atsuko Miyaji, ``Java Obfuscation
+   with a Theoretical Basis for Building Secure Mobile Agents,'' In
+   Proc. 7th IFIP TC-6 TC-11 Conference on Communications and
+   Multimedia Security, CMS 2003, Volume. 2828 of Lecture Notes in
+   Computer Science, pp. 89--103, October 2003.
+
+*{Web Pages} ― Webページ
+
+ * ``Obfuscated Code'' (16 February 2011 at 02:58). In <Wikipedia: The
+   Free Encyclopedia>. Retrieved from
+   {{http://en.wikipedia.org/wiki/Obfuscated_code}}.
+
+ * Douglas Low, ``Protecting Java Code Via Code Obfuscation,'' ACM
+   Crossroads, Spring 1998 issue,
+   {{http://www.cs.arizona.edu/~collberg/Research/Students/DouglasLow/obfuscation.html}}.
+
+ * Dmitry LESKOV, ``Protect Your Java Code - Through Obfuscators And
+   Beyond,'' Excelsior, (22 Apri 2009),
+   {{http://www.excelsior-usa.com/articles/java-obfuscators.html}}.
+
+*{Tools}
+
+ *{{{http://proguard.sourceforge.net/}ProGuard}}
+
+ *{{{http://jode.sourceforge.net/}Jode}}
+
+ *{{{http://se.naist.jp/DonQuixote/}DonQuixote}}
+
+
