@@ -17,6 +17,14 @@
     <url>https://github.com/tamada/tuchinoko.git</url>
   </scm>
 
+  <repositories>
+    <repository>
+      <id>talisman.sourceforge.jp</id>
+      <name>Talisman Maven2 Repository in sourceforge.jp</name>
+      <url>http://talisman.sourceforge.jp/maven2</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.ow2.asm</groupId>
@@ -27,7 +35,7 @@
     <dependency>
       <groupId>jp.sourceforge.talisman</groupId>
       <artifactId>xmlcli</artifactId>
-      <version>1.2.2</version>
+      <version>1.2.3</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
