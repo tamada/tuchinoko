@@ -4,55 +4,55 @@ tuchinoko
 Features
 --------
 
-Tuchinoko��Java�N���X�t�@�C���̕s���ȉ�͂�h�~���邱�Ƃ�ړI�Ƃ��܂��D
-���̂��߂ɁCJava�N���X�t�@�C����ǂ݂ɂ����`���ɕϊ����܂��D���̕ϊ���
-��ǉ�(obfuscation)�ƌĂт܂��D��ȋ@�\�͈ȉ��̒ʂ�ł��D
+TuchinokoはJavaクラスファイルの不正な解析を防止することを目的とします．
+そのために，Javaクラスファイルを読みにくい形式に変換します．この変換を
+難読化(obfuscation)と呼びます．主な機能は以下の通りです．
 
-* �^����ꂽ�N���X�t�@�C��(Jar�t�@�C���܂�)���w�肳�ꂽ��ǉ���@�œ�ǉ����܂��D
-* ��ǉ���@�̓v���O�C���`���Œ񋟂���܂��D
-* �����̓�ǉ���@�����ԂɓK�p�ł��܂��D
+* 与えられたクラスファイル(Jarファイル含む)を指定された難読化手法で難読化します．
+* 難読化手法はプラグイン形式で提供されます．
+* 複数の難読化手法を順番に適用できます．
 
 Requirements
 ------------
 
-* �J���E���s��
+* 開発・実行環境
     * Java SE 6
-* �v���W�F�N�g�Ǘ�
+* プロジェクト管理
     * [Maven 3.x](http://maven.apache.org/)
-* �R���p�C���ɕK�v�D
+* コンパイルに必要．
     * [ASM 4.0](http://asm.objectweb.org)
     * [Apache Commons Cli 1.1](http://commons.apache.org/cli/)
     * [Talisman XmlCli 1.2.2](http://talisman.sourceforge.jp/xmlcli/)
-* ���j�b�g�e�X�g�ɕK�v�D
+* ユニットテストに必要．
     * [JUnit 4.10](http://www.junit.org/) for testing.
 
 History of Tuchinoko
 --------------------
 
-Tuchinoko�̑����̋@�\�́C��҂��ߋ��ɍ쐬������ǉ��c�[��
-[DonQuixote](http://se.naist.jp/DonQuixote/)����ɊJ������Ă��܂��D
-DonQuixote �͓ޗǐ�[�Ȋw�Z�p��w�@��w(�ȉ��CNAIST)���ۗL�����������
-��ł���C��L�y�[�W�Ŕz�z����Ă��܂��D���̂܂�DonQuixote�̃o�[�W����
-�A�b�v�𑱂�����Ηǂ��̂ł����C�ȉ��̗��R�ɂ�荢��ł���Ɣ��f����
-�����D�����ŁCDonQuixote�̃o�[�W�����A�b�v�͒�~���C�V�K�v���W�F�N�g��
-���āC�V���ɓ�ǉ��c�[�����J�����邱�ƂɌ��߂܂����D
+Tuchinokoの多くの機能は，作者が過去に作成した難読化ツール
+[DonQuixote](http://se.naist.jp/DonQuixote/)を基に開発されています．
+DonQuixote は奈良先端科学技術大学院大学(以下，NAIST)が保有する特許を含
+んでおり，上記ページで配布されています．このままDonQuixoteのバージョン
+アップを続けられれば良いのですが，以下の理由により困難であると判断しま
+した．そこで，DonQuixoteのバージョンアップは停止し，新規プロジェクトと
+して，新たに難読化ツールを開発することに決めました．
 
-* ��҂�NAIST�𑲋Ƃ��Ă���CDonQuixote�̐V�o�[�W���������J���邽�߂̃T�[
-  �o�A�N�Z�X��i�������Ă��Ȃ��D���̂��߁C�V�o�[�W�����̌��J�ɂ͑��l��
-  ����؂�Ȃ���΂Ȃ�Ȃ��D�p�ɂȃo�[�W�����A�b�v���s���ƁCNAIST�̒S��
-  �҂̕��S�ƂȂ�D
-* ������ۗL����\�t�g�E�F�A�ł���C�����R�Ɏg����\�t�g�E�F�A�̗���
-  ������D
-* �������O�Ŏ��R�Ɏg����\�t�g�E�F�A�Ɛ����̂���\�t�g�E�F�A������ƍ�
-  ���̂��ƂɂȂ�D
-* �A�[�L�e�N�`���������������D
+* 作者はNAISTを卒業しており，DonQuixoteの新バージョンを公開するためのサー
+  バアクセス手段を持っていない．そのため，新バージョンの公開には他人の
+  手を借りなければならない．頻繁なバージョンアップを行うと，NAISTの担当
+  者の負担となる．
+* DonQuixoteは特許を保有するソフトウェアである．そのため，特許と自由な
+  使用の両立が難しい．
+* 同じ名前で自由に使えるソフトウェアと，制限のあるソフトウェアがあると
+  混乱のもとになる．
+* アーキテクチャを見直したい．
 
 Authors
 -------
 
-Name:        �ʓc �t��
+Name:        玉田 春昭
 
-Affiliation: ���s�Y�Ƒ�w �R���s���[�^���H�w��
+Affiliation: 京都産業大学 コンピュータ理工学部
 
 E-mail:      tamada[__at__]cc.kyoto-su.ac.jp
 
