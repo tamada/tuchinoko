@@ -1,6 +1,7 @@
 package com.github.tuchinoko;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,19 +27,21 @@ import com.github.tuchinoko.utils.Provider;
  * 
  * @author Haruaki Tamada
  */
-public class Main{
+public final class Main{
     private static final String HELP_OPTION = "help";
     private static final String PROCESSORS_OPTION = "processors";
+    private PrintWriter out;
 
     private Main(String[] args){
+        out = new PrintWriter(System.out);
         try{
             Options options = buildOptions();
             CommandLineParser parser = new PosixParser();
             CommandLinePlus commandLine = new CommandLinePlus(parser.parse(options, args, false));
             Environment env = new Environment();
-            System.out.println("help option: " + commandLine.hasOption(HELP_OPTION));
-            System.out.println("processors: " + commandLine.getOptionValue(PROCESSORS_OPTION));
-            System.out.println("args length: " + commandLine.getArgs().length);
+            out.println("help option: " + commandLine.hasOption(HELP_OPTION));
+            out.println("processors: " + commandLine.getOptionValue(PROCESSORS_OPTION));
+            out.println("args length: " + commandLine.getArgs().length);
             if(commandLine.hasOption("help")
                     || commandLine.getOptionValue(PROCESSORS_OPTION) == null
                     || commandLine.getArgs().length == 0){
@@ -85,7 +88,7 @@ public class Main{
     }
 
     private void showUnknownProcessor(String processorName){
-        System.out.printf("%s: unknown%n", processorName);
+        out.printf("%s: unknown%n", processorName);
     }
 
     private boolean showProcessorHelp(String processorName, Environment env, Options options){
@@ -98,32 +101,32 @@ public class Main{
         else{
             Provider provider = processorService.getProvider();
 
-            System.out.printf("Processor Name: %s%n", processorName);
-            System.out.printf("Description: %s%n", processorService.getDescription());
+            out.printf("Processor Name: %s%n", processorName);
+            out.printf("Description: %s%n", processorService.getDescription());
             Author[] authors = provider.getAuthors();
             if(authors.length == 1){
-                System.out.printf("Author: %s%n", authors[0]);
+                out.printf("Author: %s%n", authors[0]);
             }
             else if(authors.length > 1){
-                System.out.println("Authors:");
+                out.println("Authors:");
                 for(Author author: authors){
-                    System.out.printf("    %s%n", author);
+                    out.printf("    %s%n", author);
                 }
             }
             Organization org = provider.getOrganization();
             if(org != null){
-                System.out.printf("Organization: %s ", org.getName());
+                out.printf("Organization: %s ", org.getName());
                 if(org.getUrl() != null){
-                    System.out.printf("<%s>", org.getUrl());
+                    out.printf("<%s>", org.getUrl());
                 }
-                System.out.println();
+                out.println();
             }
             Arguments arguments = processorService.getDefaultArguments();
             if(arguments.getArgumentCount() > 0){
-                System.out.println();
-                System.out.println("Parameters");
+                out.println();
+                out.println("Parameters");
                 for(Argument arg: arguments){
-                    System.out.printf(
+                    out.printf(
                         "    %s: %s%n        %s%n",
                         arg.getName(), arg.getValue(), arg.getDescription()
                     );
@@ -154,10 +157,10 @@ public class Main{
 
     private void showProcessorList(Environment env){
         if(env.getServiceCount() > 0){
-            System.out.println();
-            System.out.println("Available Processors");
+            out.println();
+            out.println("Available Processors");
             for(ProcessorService service: env){
-                System.out.printf("    %s: %s%n", service.getProcessorName(), service.getDescription());
+                out.printf("    %s: %s%n", service.getProcessorName(), service.getDescription());
             }
         }
     }

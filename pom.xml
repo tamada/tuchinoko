@@ -10,6 +10,7 @@
   <name>Tuchinoko: Protect your Java code</name>
   <url>http://github.com/tamada/tuchinoko/</url>
   <description>Java Obfuscation Tool.</description>
+  <inceptionYear>2010</inceptionYear>
 
   <scm>
     <connection>scm:git:git://github.com/tamada/tuchinoko.git</connection>

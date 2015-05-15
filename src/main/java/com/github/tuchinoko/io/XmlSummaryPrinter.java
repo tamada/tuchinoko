@@ -3,6 +3,7 @@ package com.github.tuchinoko.io;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -61,14 +62,14 @@ public class XmlSummaryPrinter extends SummaryPrinter{
     private void printTree(PrintWriter out, Tree parent, String indent){
         if(parent.getSize() > 0){
             String childIndent = indent + "  ";
-            out.printf("%s<%s>%n", indent, parent.tag);
-            for(Tree tree: parent.nodes.values()){
+            out.printf("%s<%s>%n", indent, parent.getTag());
+            for(Tree tree: parent){
                 printTree(out, tree, childIndent);
             }
-            out.printf("%s</%s>%n", indent, parent.tag);
+            out.printf("%s</%s>%n", indent, parent.getTag());
         }
         else{
-            out.printf("%s<%s>%s</%s>%n", indent, parent.tag, parent.value, parent.tag);
+            out.printf("%s<%s>%s</%s>%n", indent, parent.getTag(), parent.value, parent.getTag());
         }
     }
 
@@ -92,13 +93,21 @@ public class XmlSummaryPrinter extends SummaryPrinter{
         return root.getNodes();
     }
 
-    private static class Tree{
+    private static class Tree implements Iterable<Tree>{
         private Map<String, Tree> nodes = new LinkedHashMap<String, Tree>();
         private String tag;
         private String value;
 
         public Tree(String tag){
             this.tag = tag;
+        }
+
+        public Iterator<Tree> iterator(){
+            return nodes.values().iterator();
+        }
+
+        public String getTag(){
+            return tag;
         }
 
         public int getSize(){
@@ -109,17 +118,9 @@ public class XmlSummaryPrinter extends SummaryPrinter{
             return nodes.values().toArray(new Tree[nodes.size()]);
         }
 
-        public String getTag(){
-            return tag;
-        }
-
-        public String getValue(){
-            return value;
-        }
-
         public void setValue(String value){
             if(value == null){
-                throw new NullPointerException();
+                throw new IllegalArgumentException();
             }
             this.value = value;
         }
